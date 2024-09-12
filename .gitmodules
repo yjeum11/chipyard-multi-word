@@ -151,3 +151,6 @@
 [submodule "tools/firrtl2"]
 	path = tools/firrtl2
 	url = https://github.com/ucb-bar/firrtl2.git
+[submodule "generators/myRoCC"]
+	path = generators/myRoCC
+	url = git@github.com:yjeum11/myRoCC.git
