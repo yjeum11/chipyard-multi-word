@@ -17,7 +17,7 @@ SIZE = $(TARGET)-size
 #################################
 
 # SoC Settings
-ARCH = rv64imafdc
+ARCH = rv64gcv
 ABI = lp64d
 ARCHFLAGS = -march=$(ARCH) -mabi=$(ABI)
 
@@ -53,6 +53,15 @@ multi-word/vhd128/vhd128.o: multi-word/vhd128/vhd128.c multi-word/vhd128/vhd128.
 
 %.riscv: %.o $(libgloss) multi-word/vhd128/vhd128.o
 	$(GCC) $(LDFLAGS) multi-word/vhd128/vhd128.o $< -o $@
+
+multi-word/rvv/ntt.o: multi-word/rvv/ntt.c
+	$(GCC) $(CFLAGS) -c $< -o $@
+
+multi-word/rvv/vnd128_rvv.o: multi-word/rvv/vnd128_rvv.c
+	$(GCC) $(CFLAGS) -c $< -o $@
+
+multi-word/rvv/main.riscv: multi-word/rvv/main.o multi-word/rvv/ntt.o multi-word/rvv/vnd128_rvv.o $(libgloss)
+	$(GCC) $(LDFLAGS) multi-word/rvv/vnd128_rvv.o multi-word/rvv/ntt.o $< -o $@
 
 %.dump: %.riscv
 	$(OBJDUMP) -D $< > $@
